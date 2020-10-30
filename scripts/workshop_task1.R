@@ -1,6 +1,7 @@
 #############################################################################################
 # WORKSHOP TASK 1
 #############################################################################################
+library(tidyverse)
 
 # data give HDI for different countries since 1990
 filehdi <- "data-raw/Human-development-index.csv"
@@ -8,6 +9,7 @@ filehdi <- "data-raw/Human-development-index.csv"
 #############################################################################################
 # tidy data
 
+# janitor::clean_names() ensures column names lowercase, no spaces, year columns have "x"
 hdi <- read.csv(filehdi) %>% 
   janitor::clean_names()
 
@@ -15,13 +17,13 @@ hdi <- read.csv(filehdi) %>%
 hdi <- hdi %>% 
   pivot_longer(names_to = "year", 
                values_to = "hdi",
-               cols = -country)
+               cols = -c(hdi_rank_2018, country))
 
-# removed rows containing hdi_rank_2018
-hdi <- hdi %>% 
-  filter(str_detect(year, "x"))
+# remove x from year & make numeric
+hdi <- hdi %>%
+  mutate(year =  str_replace(year, "x", "") %>% as.numeric())
 
-# remove NA values
+# remove missing NA values
 hdi_no_na <- hdi %>% 
   filter(!is.na(hdi))
 

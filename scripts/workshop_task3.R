@@ -25,7 +25,7 @@ sol2 <- sol %>%
 sol2 <- sol2 %>% 
   extract(lineage_rep, 
           c("cell lineage", "replicate"),
-          "(y[0-9]{3,4})\\_([a-z])")
+          "(y[0-9]{3,4})\\_([a-c])")
 
 #Write sol2 to file
 file4 <-  "data-processed/sol2.txt"

@@ -23,7 +23,8 @@ buoy44025 <- read_table(file,
 
 # rename the columns to measure_unit (row1_row2)
 unit <- scan(file = file, what = character(), skip = 1, nlines = 1) %>% 
-  str_remove("#")
+  str_remove("#") %>% 
+  str_replace("/", "-per-")
 
 measure_unit <- scan(file = file, what = character(), nlines = 1) %>% 
   str_remove("#") %>% 
